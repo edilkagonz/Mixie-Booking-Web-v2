@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Mixie The Clown</title>
+</head>
+<body>
+    <h1>Confirm Your Booking</h1>
+    <p>Deposit Amount: $50.00</p>
+    <p>Please complete your payment to confirm your booking.</p>
+
+    <!-- PayPal Button -->
+    <form method="post" action="https://www.sandbox.paypal.com/cgi-bin/webscr">
+        {% csrf_token %}
+        {{ form.render }}  <!-- Render PayPal form -->
+        <button type="submit">Proceed to Payment</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Party - Mixie The Clown</title>
+
+    <!-- Flatpickr CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="/" class="logo-container">
+                <div class="logo-icon">
+                    <span class="logo-sparkle">✨</span>
+                </div>
+                <span class="logo-text">Mixie</span>
+            </a>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'home' %}#about-us">About Us</a>
+                <a href="#" class="active">Book Now</a>
+                <a href="{% url 'home' %}#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Booking Section -->
+    <section class="booking-section">
+        <h1 class="booking-title magical-title">
+            <div class="title-wrapper">
+                <span class="magic-text">Book Your</span>
+                <span class="sparkle-text">Magical</span>
+                <span class="party-text">Party!</span>
+                <span class="bounce-text">🎪✨</span>
+            </div>
+        </h1>
+
+        <!-- Booking Form -->
+        <div class="booking-container">
+            <form method="POST" action="{% url 'book_now' %}" class="booking-form">
+                {% csrf_token %}
+
+                <!-- Render form fields -->
+                <div class="form-group">
+                    <label for="id_name">Name</label>
+                    {{ form.name }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_email">Email</label>
+                    {{ form.email }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_phone">Phone</label>
+                    {{ form.phone }}
+                </div>
+
+                <!-- Date Picker -->
+                <div class="form-group">
+                    <label for="id_date">📅 Select Date</label>
+                    {{ form.date }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_time">⏰ Select Time</label>
+                    {{ form.time }}
+                </div>
+
+                <!-- Package Dropdown with Prices -->
+                <div class="form-group">
+                    <label for="id_package">🎁 Select Package</label>
+                    {{ form.package }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_message">Message</label>
+                    {{ form.message }}
+                </div>
+
+                <button type="submit" class="btn primary-btn">Book Now ✨</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Flatpickr for date picker
+            fetch("{% url 'get_disabled_dates' %}")
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Disabled Dates: ", data.disabled_dates); // Debugging
+                    
+                    flatpickr("#id_date", {
+                        dateFormat: "Y-m-d", // Date format
+                        disable: data.disabled_dates, // Disable dates from backend
+                        minDate: new Date().fp_incr(3) // Block dates within the next 3 days
+                    });
+                })
+                .catch(error => console.error('Error fetching disabled dates:', error));
+        });
+    </script>
+</body>
+</html>

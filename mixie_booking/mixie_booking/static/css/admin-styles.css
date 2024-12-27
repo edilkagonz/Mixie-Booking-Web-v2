@@ -1,0 +1,84 @@
+/* Admin Login Styles */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--light-purple), white);
+}
+
+.login-box {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(183, 110, 255, 0.2);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header h2 {
+    color: var(--clown-purple);
+    font-family: 'Comic Neue', cursive;
+    margin-top: 1rem;
+}
+
+.login-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--clown-purple);
+    font-weight: 600;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid rgba(183, 110, 255, 0.2);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: var(--clown-purple);
+    box-shadow: 0 0 10px rgba(183, 110, 255, 0.2);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(45deg, var(--clown-purple), var(--clown-red));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(183, 110, 255, 0.2);
+}
+
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.alert-error {
+    background: rgba(255, 77, 77, 0.1);
+    color: var(--clown-red);
+    border: 1px solid var(--clown-red);
+} 

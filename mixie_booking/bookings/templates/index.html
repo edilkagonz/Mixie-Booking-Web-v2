@@ -1,0 +1,381 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mixie The Clown - Professional Entertainment</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="#home" class="logo-container">
+                <div class="logo-icon">
+                    <span class="logo-sparkle">✨</span>
+                </div>
+                <span class="logo-text">Mixie</span>
+            </a>
+            <div class="nav-links">
+                <a href="#home" class="active">
+                    <span class="nav-text">Home</span>
+                </a>
+                <a href="#about-us">
+                    <span class="nav-text">About Us</span>
+                </a>
+                <a href="{% url 'book_now' %}">
+                    <span class="nav-text">Book Now</span>
+                </a>                
+                <a href="#contact">
+                    <span class="nav-text">Contact</span>
+                </a>
+            </div>
+            <div class="menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="magical-title">
+                    <span class="gradient-text">Welcome to</span>
+                    <span class="sparkle-text">Mixie's</span>
+                    <span class="gradient-text">Magical World!</span>
+                    <span class="bounce-text">🎪</span>
+                </h1>
+                
+                <p class="hero-subtitle">
+                    <span class="rainbow-text">Where</span>
+                    <span class="glow-text">Every</span>
+                    <span class="rainbow-text">Party</span>
+                    <span class="glow-text">Becomes</span>
+                    <span class="rainbow-text">Unforgettable</span>
+                    <span class="bounce-text">Adventure!</span>
+                    <span class="sparkle-text">🎈</span>
+                </p>
+                <div class="hero-buttons">
+                    <a href="{% url 'book_now' %}" class="btn primary-btn">Book Your Magical Party!</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="{% static 'images/IMG_2091.JPG' %}" alt="Mixie making balloon art" class="balloon-art-image">
+                <div class="image-decorations">
+                    <span class="floating-balloon">🎈</span>
+                    <span class="floating-balloon">✨</span>
+                    <span class="floating-balloon">🎈</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider">
+        <div class="divider-wave"></div>
+        <div class="divider-content">
+            <span class="divider-icon">🎈</span>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about-us">
+        <div class="about-content">
+            <h2 class="about-title">
+                <span class="rainbow-text">Meet</span>
+                <span class="sparkle-text">Mixie</span>
+                <span class="bounce-text">✨</span>
+            </h2>
+            
+            <div class="about-grid">
+                <div class="about-text">
+                    <div class="story-box">
+                        <h3 class="story-title">
+                            <span class="gradient-text">The Story Behind the Smile</span>
+                            <span class="bounce-text">🎭</span>
+                        </h3>
+                        <p class="intro-text">
+                            <span class="rainbow-text">For over a decade, </span>
+                            <span class="sparkle-text">Mixie </span>
+                            <span class="gradient-text">has been transforming ordinary parties into extraordinary adventures! </span>
+                            <span class="bounce-text">🎈</span>
+                        </p>
+                    </div>
+
+                    <div class="experience-box">
+                        <h3 class="experience-title">
+                            <span class="gradient-text">Experience & Skills</span>
+                            <span class="bounce-text">🎪</span>
+                        </h3>
+                        <ul class="skill-list">
+                            <li class="skill-item">
+                                <div class="skill-icon">🎭</div>
+                                <div class="skill-details">
+                                    <h4>Professional Face Painting</h4>
+                                    <p>Transform kids into their favorite characters</p>
+                                </div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-icon">🎈</div>
+                                <div class="skill-details">
+                                    <h4>Balloon Art Master</h4>
+                                    <p>Create amazing balloon sculptures and animals</p>
+                                </div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-icon">✨</div>
+                                <div class="skill-details">
+                                    <h4>Magic Shows</h4>
+                                    <p>Captivating tricks and illusions</p>
+                                </div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-icon">🎮</div>
+                                <div class="skill-details">
+                                    <h4>Interactive Games</h4>
+                                    <p>Fun party games for all ages</p>
+                                </div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-icon"></div>
+                                <div class="skill-details">
+                                    <h4>Music & Dancing</h4>
+                                    <p>High-energy dance parties and musical fun</p>
+                                </div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-icon">👗</div>
+                                <div class="skill-details">
+                                    <h4>Character Costumes</h4>
+                                    <p>Dress up as your favorite characters</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="stats-box">
+                        <div class="stat-item">
+                            <span class="stat-number gradient-text">1000+</span>
+                            <span class="stat-label">Parties Hosted</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number gradient-text">5000+</span>
+                            <span class="stat-label">Happy Kids</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number gradient-text">10+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-gallery">
+                    <div class="gallery-grid">
+                        <img src="{% static 'images/IMG_2091.JPG' %}" alt="Mixie performing magic" class="gallery-img">
+                        <img src="{% static 'images/IMG_2090 2.JPG' %}" alt="Mixie with Mario and Luigi" class="gallery-img">
+                        <img src="{% static 'images/IMG_2094.JPG' %}" alt="Mixie entertaining" class="gallery-img">
+                        <img src="{% static 'images/IMG_2096.JPG' %}" alt="Mixie at party" class="gallery-img">
+                    </div>
+                    <div class="gallery-decorations">
+                        <span class="floating-star">⭐</span>
+                        <span class="floating-heart">💖</span>
+                        <span class="floating-magic">🎩</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider">
+        <div class="divider-wave"></div>
+        <div class="divider-content">
+            <span class="divider-icon">🎈</span>
+        </div>
+    </div>
+
+    <!-- Packages Section -->
+    <div class="section-divider">
+        <div class="divider-wave"></div>
+        <div class="divider-content">
+            <span class="divider-icon">🎁</span>
+        </div>
+    </div>
+
+    <section id="packages">
+        <h2 class="packages-title">
+            <span class="gradient-text">Magical</span>
+            <span class="sparkle-text">Packages</span>
+            <span class="bounce-text">✨</span>
+        </h2>
+        
+        <div class="packages-container">
+            <!-- Basic Package -->
+            <div class="package-card">
+                <div class="package-header">
+                    <span class="package-icon">🎈</span>
+                    <h3 class="package-title gradient-text">Basic Fun</h3>
+                    <p class="package-price rainbow-text">$199</p>
+                </div>
+                <ul class="package-features">
+                    <li><span class="feature-check">✓</span> 1 Hour Entertainment</li>
+                    <li><span class="feature-check">✓</span> Balloon Animals</li>
+                    <li><span class="feature-check">✓</span> Face Painting</li>
+                    <li><span class="feature-check">✓</span> Basic Magic Tricks</li>
+                </ul>
+                <a href="{% url 'book_now' %}?package=basic" class="package-btn">Book Now</a>
+            </div>
+
+            <!-- Premium Package -->
+            <div class="package-card premium">
+                <div class="popular-tag">Most Popular</div>
+                <div class="package-header">
+                    <span class="package-icon">🎪</span>
+                    <h3 class="package-title gradient-text">Premium Magic</h3>
+                    <p class="package-price rainbow-text">$299</p>
+                </div>
+                <ul class="package-features">
+                    <li><span class="feature-check">✓</span> 2 Hours Entertainment</li>
+                    <li><span class="feature-check">✓</span> Balloon Animals</li>
+                    <li><span class="feature-check">✓</span> Face Painting</li>
+                    <li><span class="feature-check">✓</span> Magic Show</li>
+                    <li><span class="feature-check">✓</span> Games & Dancing</li>
+                    <li><span class="feature-check">✓</span> Party Props</li>
+                </ul>
+                <a href="{% url 'book_now' %}?package=premium" class="package-btn premium-btn">Book Now</a>
+            </div>
+
+            <!-- Deluxe Package -->
+            <div class="package-card">
+                <div class="package-header">
+                    <span class="package-icon">👑</span>
+                    <h3 class="package-title gradient-text">Deluxe Party</h3>
+                    <p class="package-price rainbow-text">$399</p>
+                </div>
+                <ul class="package-features">
+                    <li><span class="feature-check">✓</span> 3 Hours Entertainment</li>
+                    <li><span class="feature-check">✓</span> Balloon Animals</li>
+                    <li><span class="feature-check">✓</span> Face Painting</li>
+                    <li><span class="feature-check">✓</span> Magic Show</li>
+                    <li><span class="feature-check">✓</span> Games & Dancing</li>
+                    <li><span class="feature-check">✓</span> Party Props</li>
+                    <li><span class="feature-check">✓</span> Character Costume</li>
+                    <li><span class="feature-check">✓</span> Party Favors</li>
+                </ul>
+                <a href="{% url 'book_now' %}?package=deluxe" class="package-btn">Book Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider">
+        <div class="divider-wave"></div>
+        <div class="divider-content">
+            <span class="divider-icon">✨</span>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="section-divider">
+        <div class="divider-wave"></div>
+        <div class="divider-content">
+            <span class="divider-icon">📞</span>
+        </div>
+    </div>
+
+    <section id="contact">
+        <h2 class="contact-title">
+            <span class="rainbow-text">Contact</span>
+            <span class="sparkle-text">Mixie</span>
+            <span class="bounce-text">✨</span>
+        </h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <span class="contact-icon">📱</span>
+                    <h3>Call or Text</h3>
+                    <p>Available 7 days a week!</p>
+                    <a href="tel:+17872395796" class="contact-link">(787) 239-5796</a>
+                </div>
+                <div class="contact-card">
+                    <span class="contact-icon">📧</span>
+                    <h3>Email Me</h3>
+                    <p>Available 24/7</p>
+                    <a href="mailto:mixie@example.com" class="contact-link">mixie@example.com</a>
+                </div>
+                <div class="contact-card">
+                    <span class="contact-icon">⏰</span>
+                    <h3>Business Hours</h3>
+                    <p>Mon-Sun: 9:00 AM - 6:00 PM</p>
+                </div>
+            </div>
+            <form method="POST" action="{% url 'contact_submit' %}" class="contact-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="send-btn">Send Message ✉️</button>
+            </form>
+            
+            
+            <!-- Display Messages -->
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <a href="#home" class="logo-container">
+                <div class="logo-icon">
+                    <span class="logo-sparkle">✨</span>
+                </div>
+                <span class="logo-text">Mixie</span>
+            </a>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about-us">About Us</a>
+                <a href="booking.html">Book Now</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-link">Facebook</a>
+                <a href="#" class="social-link">Instagram</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Mixie The Clown. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+    <!-- Floating Book Button -->
+    <a href="booking.html" class="floating-book-btn">
+        <span>🎪</span>
+    </a>
+</body>
+</html> 
