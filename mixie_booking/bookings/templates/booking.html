@@ -80,10 +80,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="id_message">Message</label>
+                    <label for="id_message">Address</label>
                     {{ form.message }}
                 </div>
 
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="consent" required>
+                        I agree to the <a href="{% url 'privacy_policy' %}" target="_blank" class="privacy-link">Privacy Policy</a>
+
+                    </label>
+                </div>
+                
                 <button type="submit" class="btn primary-btn">Book Now ✨</button>
             </form>
         </div>
@@ -108,5 +116,23 @@
                 .catch(error => console.error('Error fetching disabled dates:', error));
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+    <script>
+      window.addEventListener('load', function(){
+        window.cookieconsent.initialise({
+          "palette": {
+            "popup": { "background": "#000" },
+            "button": { "background": "#f1d600" }
+          },
+          "content": {
+            "message": "This website uses cookies to ensure you get the best experience.",
+            "dismiss": "Got it!",
+            "link": "Learn more",
+            "href": "{% url 'privacy_policy' %}"
+          }
+        })
+      });
+    </script>
+    
 </body>
 </html>

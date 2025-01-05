@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Mixie The Clown</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="privacy-page">
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="/" class="logo-container">
+                <div class="logo-icon">
+                    <span class="logo-sparkle">✨</span>
+                </div>
+                <span class="logo-text">Mixie</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-text">Home</a>
+                <a href="{% url 'book_now' %}" class="nav-text">Book Now</a>
+                <a href="#contact" class="nav-text">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Privacy Policy Content -->
+    <div class="privacy-container">
+        <h1 class="privacy-title">Privacy Policy</h1>
+        <p class="privacy-intro">Your privacy is important to us. This policy explains how we collect, store, and use your personal data.</p>
+
+        <!-- Sections -->
+        <section class="privacy-section">
+            <h2>1. Information We Collect</h2>
+            <ul>
+                <li>Contact details (name, email, phone number).</li>
+                <li>Booking details (dates, services).</li>
+                <li>Payment information via PayPal (securely processed).</li>
+            </ul>
+        </section>
+
+        <section class="privacy-section">
+            <h2>2. How We Use Your Data</h2>
+            <ul>
+                <li>To process bookings and payments.</li>
+                <li>To send confirmations and updates about bookings.</li>
+                <li>To improve our services and respond to inquiries.</li>
+            </ul>
+        </section>
+
+        <section class="privacy-section">
+            <h2>3. Your Rights</h2>
+            <p>You have the right to access, correct, delete, or download your data. Contact us at <a href="mailto:email@example.com" class="privacy-link">email@example.com</a> to make a request.</p>
+        </section>
+
+        <section class="privacy-section">
+            <h2>4. Data Retention</h2>
+            <p>We retain booking and payment data for up to 12 months for auditing purposes.</p>
+        </section>
+
+        <!-- Buttons -->
+        <div class="privacy-buttons">
+            <a href="/" class="btn home-btn">Return Home</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <a href="/" class="logo-container">
+                <div class="logo-icon">
+                    <span class="logo-sparkle">✨</span>
+                </div>
+                <span class="logo-text">Mixie</span>
+            </a>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="#contact">Contact</a>
+                <a href="{% url 'book_now' %}">Book Now</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-link">Facebook</a>
+                <a href="#" class="social-link">Instagram</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Mixie The Clown. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

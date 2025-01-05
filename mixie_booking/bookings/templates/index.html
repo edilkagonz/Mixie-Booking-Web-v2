@@ -56,7 +56,7 @@
                     <span class="rainbow-text">Where</span>
                     <span class="glow-text">Every</span>
                     <span class="rainbow-text">Party</span>
-                    <span class="glow-text">Becomes</span>
+                    <span class="glow-text">Becomes an</span>
                     <span class="rainbow-text">Unforgettable</span>
                     <span class="bounce-text">Adventure!</span>
                     <span class="sparkle-text">🎈</span>
@@ -221,15 +221,13 @@
                 <div class="package-header">
                     <span class="package-icon">🎈</span>
                     <h3 class="package-title gradient-text">Basic Fun</h3>
-                    <p class="package-price rainbow-text">$199</p>
                 </div>
                 <ul class="package-features">
-                    <li><span class="feature-check">✓</span> 1 Hour Entertainment</li>
                     <li><span class="feature-check">✓</span> Balloon Animals</li>
                     <li><span class="feature-check">✓</span> Face Painting</li>
                     <li><span class="feature-check">✓</span> Basic Magic Tricks</li>
                 </ul>
-                <a href="{% url 'book_now' %}?package=basic" class="package-btn">Book Now</a>
+                <a href="{% url 'book_now' %}?package={{ package.id }}" class="package-btn">Book Now</a>
             </div>
 
             <!-- Premium Package -->
@@ -238,17 +236,15 @@
                 <div class="package-header">
                     <span class="package-icon">🎪</span>
                     <h3 class="package-title gradient-text">Premium Magic</h3>
-                    <p class="package-price rainbow-text">$299</p>
                 </div>
                 <ul class="package-features">
-                    <li><span class="feature-check">✓</span> 2 Hours Entertainment</li>
                     <li><span class="feature-check">✓</span> Balloon Animals</li>
                     <li><span class="feature-check">✓</span> Face Painting</li>
                     <li><span class="feature-check">✓</span> Magic Show</li>
                     <li><span class="feature-check">✓</span> Games & Dancing</li>
                     <li><span class="feature-check">✓</span> Party Props</li>
                 </ul>
-                <a href="{% url 'book_now' %}?package=premium" class="package-btn premium-btn">Book Now</a>
+                <a href="{% url 'book_now' %}?package={{ package.id }}" class="package-btn">Book Now</a>
             </div>
 
             <!-- Deluxe Package -->
@@ -256,10 +252,8 @@
                 <div class="package-header">
                     <span class="package-icon">👑</span>
                     <h3 class="package-title gradient-text">Deluxe Party</h3>
-                    <p class="package-price rainbow-text">$399</p>
                 </div>
                 <ul class="package-features">
-                    <li><span class="feature-check">✓</span> 3 Hours Entertainment</li>
                     <li><span class="feature-check">✓</span> Balloon Animals</li>
                     <li><span class="feature-check">✓</span> Face Painting</li>
                     <li><span class="feature-check">✓</span> Magic Show</li>
@@ -268,10 +262,69 @@
                     <li><span class="feature-check">✓</span> Character Costume</li>
                     <li><span class="feature-check">✓</span> Party Favors</li>
                 </ul>
-                <a href="{% url 'book_now' %}?package=deluxe" class="package-btn">Book Now</a>
+                <a href="{% url 'book_now' %}?package={{ package.id }}" class="package-btn">Book Now</a>
             </div>
         </div>
     </section>
+
+    <!-- Divider -->
+<div class="section-divider">
+    <div class="divider-wave"></div>
+    <div class="divider-content">
+        <span class="divider-icon">❓</span>
+    </div>
+</div>
+
+<!-- FAQs Section -->
+<section id="faqs">
+    <h2 class="faqs-title">
+        <span class="gradient-text">Frequently</span>
+        <span class="sparkle-text">Asked</span>
+        <span class="bounce-text">Questions</span>
+    </h2>
+    
+    <div class="faqs-container">
+        <div class="faq-item">
+            <button class="faq-question">How long in advance will you need to book a reservation?</button>
+            <div class="faq-answer">72 hours</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">How long in advance can you cancel your reservation?</button>
+            <div class="faq-answer">72 hours</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">How much is the payment deposit to confirm the booking?</button>
+            <div class="faq-answer">$50</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">What payment methods do you accept?</button>
+            <div class="faq-answer">We accept payments through PayPal.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">Can I get a refund if I cancel my reservation?</button>
+            <div class="faq-answer">Yes, you will receive a full refund if you cancel 72 hours in advance. Some fees may apply if cancellation is done after the timeframe.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">How long does each party package last?</button>
+            <div class="faq-answer">Each package duration is specified in the booking form. It typically ranges from 1 to 2 hours.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">Do you provide decorations and props?</button>
+            <div class="faq-answer">Yes, we provide themed props and decorations for premium and deluxe packages.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">What safety measures do you follow?</button>
+            <div class="faq-answer">We follow COVID-19 safety protocols, including sanitized props and masks for performers if required.</div>
+        </div>
+    </div>
+</section>
 
     <!-- Divider -->
     <div class="section-divider">
@@ -368,6 +421,7 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; 2024 Mixie The Clown. All rights reserved.</p>
+            <a href="{% url 'privacy_policy' %}" target="_blank">Privacy Policy</a>
         </div>
     </footer>
 

@@ -4,18 +4,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment - Mixie The Clown</title>
+    <title>Confirm Payment - Mixie The Clown</title>
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: #f9f9f9;
+        }
+        header {
+            background: #FF4081;
+            padding: 10px 20px;
+            text-align: center;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Comic Neue', cursive;
+            font-size: 30px;
+            color: #fff;
+            text-decoration: none;
+        }
+        .logo-sparkle {
+            margin-right: 8px;
+            animation: sparkle 1.5s infinite;
+        }
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        .payment-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .payment-container h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .payment-container p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .payment-icon {
+            font-size: 50px;
+            color: #FF4081;
+            margin-bottom: 20px;
+        }
+        .secure-payment {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+        .secure-payment i {
+            color: green;
+            margin-right: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Confirm Your Booking</h1>
-    <p>Deposit Amount: $50.00</p>
-    <p>Please complete your payment to confirm your booking.</p>
+    <!-- Header -->
+    <header>
+        <a href="/" class="logo-container">
+            <span class="logo-sparkle">✨</span>
+            Mixie The Clown
+        </a>
+    </header>
 
-    <!-- PayPal Button -->
-    <form method="post" action="https://www.sandbox.paypal.com/cgi-bin/webscr">
-        {% csrf_token %}
-        {{ form.render }}  <!-- Render PayPal form -->
-        <button type="submit">Proceed to Payment</button>
-    </form>
+    <!-- Payment Section -->
+    <div class="payment-container">
+        <span class="payment-icon">🎈</span>
+        <h1>Confirm Your Booking</h1>
+        <p>Deposit Amount: <strong>$50.00</strong></p>
+        <p>Secure your magical experience with Mixie today!</p>
+
+        <!-- PayPal Button -->
+        <form method="post" action="https://www.sandbox.paypal.com/cgi-bin/webscr">
+            {% csrf_token %}
+            {{ form.render }} <!-- Render PayPal "Buy Now" button -->
+        </form>
+        <p class="secure-payment">
+            <i class="fas fa-lock"></i> Secure Payment Powered by PayPal
+        </p>
+    </div>
 </body>
 </html>

@@ -31,9 +31,17 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    '96bb-97-101-224-173.ngrok-free.app',
+    '51f2-97-101-224-173.ngrok-free.app',
+    '.ngrok-free.app',
+]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://51f2-97-101-224-173.ngrok-free.app'  
 ]
 
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
 
 # Application definition
 
@@ -151,7 +159,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 # PayPal Settings
-PAYPAL_RECEIVER_EMAIL = 'sb-un0zt35508323@business.example.com'  # Replace with your PayPal email
+PAYPAL_RECEIVER_EMAIL = 'sb-un0zt35508323@business.example.com'  # paypal account receiving money
 PAYPAL_TEST = True  # Set to False for production
 
 # Enable logging for PayPal IPN

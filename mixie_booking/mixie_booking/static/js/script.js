@@ -251,3 +251,35 @@ document.addEventListener('DOMContentLoaded', function () {
         dateInput.setAttribute('min', minDateString); // Enforces 'min' attribute dynamically
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const privacyButton = document.getElementById('privacy-btn');
+    if (privacyButton) {
+        privacyButton.addEventListener('click', function () {
+            window.open(
+                '/privacy-policy/', // URL
+                'Privacy Policy', // Window Name
+                'width=800,height=600,scrollbars=yes' // Features
+            );
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+            // Close all other FAQs
+            faqItems.forEach(innerItem => {
+                if (innerItem !== item) {
+                    innerItem.classList.remove('active');
+                }
+            });
+
+            // Toggle active class
+            item.classList.toggle('active');
+        });
+    });
+});
