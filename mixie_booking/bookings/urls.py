@@ -14,5 +14,6 @@ urlpatterns = [
     path('privacy-policy/', TemplateView.as_view(template_name="privacy_policy.html"), name='privacy_policy'),
     path('data-request/', views.data_request_view, name='data_request'),
     path('booking/payment/<int:booking_id>/', views.booking_payment, name='booking_payment'),
-    path('paypal/', csrf_exempt(ipn), name='paypal-ipn'),
+    path('paypal/', csrf_exempt(ipn), name='paypal-ipn'),  # Handles both
+    path('paypal/ipn/', csrf_exempt(ipn)),  # Explicitly for /paypal/ipn/
 ]

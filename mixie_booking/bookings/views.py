@@ -74,7 +74,9 @@ logger = logging.getLogger(__name__)
 @receiver(valid_ipn_received)
 def paypal_ipn_handler(sender, **kwargs):
     ipn_obj = sender
-    logger.info(f"IPN Received: {ipn_obj}")
+
+    logger.debug(f"IPN Raw Data: {ipn_obj}")
+   # logger.info(f"IPN Received: {ipn_obj}")
 
     try:
         # Check booking by invoice ID
@@ -112,18 +114,9 @@ def paypal_ipn_handler(sender, **kwargs):
 
 logger = logging.getLogger(__name__)
 
-def process_balance_payments():
-    tomorrow = date.today() + timedelta(days=1)
-    bookings = Booking.objects.filter(date=tomorrow, deposit_paid=True, balance_paid=False)
+# import paypalrestsdk
 
-    for booking in bookings:
-        try:
-            # Simulate remaining payment (Replace with PayPal API call in production)
-            booking.balance_paid = True
-            booking.save()
-            logger.info(f"Remaining balance paid for booking {booking.id}")
-        except Exception as e:
-            logger.error(f"Error processing balance for booking {booking.id}: {e}")
+
 
 def get_disabled_dates(request):
     # Fetch disabled dates from the database
@@ -170,7 +163,7 @@ def booking_payment(request, booking_id):
         "amount": deposit_amount,  # Charge deposit amount
         "item_name": f"Deposit for {booking.package.name} - {booking.name}",
         "invoice": str(booking.id),  # Unique booking ID
-        "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),  # IPN endpoint
+        "notify_url":"https://47c5-97-101-224-173.ngrok-free.app/paypal/",
         "return_url": request.build_absolute_uri(reverse('payment_success')),
         "cancel_return": request.build_absolute_uri(reverse('payment_cancel')),
         "currency_code": "USD",
