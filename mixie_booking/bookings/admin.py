@@ -12,26 +12,70 @@ class ContactAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'date', 'time', 'get_package_name', 'payment_status', 'transaction_id')
+    # Add refund-related fields to the display
+    list_display = (
+        'name', 'email', 'date', 'time', 
+        'get_package_name', 'payment_status', 
+        'transaction_id', 'deposit_paid', 'balance_paid', 
+        'refund_amount', 'refund_transaction_id', 'refund_date'
+    )
     search_fields = ('name', 'email')
-    list_filter = ('date', 'payment_status')
+    list_filter = ('date', 'payment_status', 'refund_date')  # Filter refunds
 
     def get_package_name(self, obj):
         return obj.package.name  # Show package name
     get_package_name.short_description = 'Package'
 
-    actions = ['mark_refunded']
+    actions = ['mark_refunded', 'issue_refund']  # Add refund action
 
-    # Refund Action (Manual Status Update)
+    # Manual Refund Action - Status Only
     def mark_refunded(self, request, queryset):
+        """
+        Manually mark a booking as refunded without processing payment.
+        """
         for booking in queryset:
-            if booking.payment_status == 'confirmed':
+            if booking.payment_status == 'confirmed':  # Only confirmed bookings
                 booking.payment_status = 'refunded'
                 booking.save()
                 self.message_user(request, f"Booking {booking.id} marked as refunded.")
             else:
                 self.message_user(request, f"Booking {booking.id} cannot be refunded (not confirmed).")
-    mark_refunded.short_description = "Mark as Refunded"
+    mark_refunded.short_description = "Mark as Refunded (Manual)"
+
+    # Automated Refund Processing via PayPal
+    def issue_refund(self, request, queryset):
+        """
+        Attempt to process a PayPal refund and update the status.
+        """
+        for booking in queryset:
+            if booking.payment_status == 'confirmed' and booking.transaction_id:
+                try:
+                    # Process refund via PayPal SDK
+                    payment = paypalrestsdk.Payment.find(booking.transaction_id)
+                    refund = payment.refund({
+                        "amount": {
+                            "total": str(booking.package.price),  # Refund full price
+                            "currency": "USD"
+                        }
+                    })
+
+                    if refund.success():
+                        booking.payment_status = 'refunded'
+                        booking.refund_amount = booking.package.price
+                        booking.refund_transaction_id = refund.id
+                        booking.refund_date = date.today()
+                        booking.save()
+                        self.message_user(request, f"Refund successful for Booking {booking.id}.")
+                    else:
+                        self.message_user(request, f"Refund failed for Booking {booking.id}. Error: {refund.error}")
+
+                except Exception as e:
+                    self.message_user(request, f"Refund failed for Booking {booking.id}. Error: {str(e)}")
+            else:
+                self.message_user(request, f"Booking {booking.id} cannot be refunded (invalid status or transaction ID).")
+    issue_refund.short_description = "Process Refund via PayPal"
+
+
 
 
 # Define a custom admin mixin for common functionality

@@ -99,9 +99,19 @@ def paypal_ipn_handler(sender, **kwargs):
             logger.info(f"Booking {booking.id} confirmed. Date disabled.")
 
         elif ipn_obj.payment_status == "Refunded":
+            # Handle refunds
+            refunded_amount = float(ipn_obj.mc_gross)  # Refund amount
+            if booking.refund_amount:  # Partial refunds
+                booking.refund_amount += refunded_amount
+            else:
+                booking.refund_amount = refunded_amount
+
+            # Update refund details
+            booking.refund_transaction_id = ipn_obj.parent_txn_id
+            booking.refund_date = ipn_obj.payment_date
             booking.payment_status = 'refunded'
             booking.save()
-            logger.info(f"Booking {booking.id} refunded.")
+            logger.info(f"Booking {booking.id} refunded. Amount: {booking.refund_amount}, Transaction ID: {booking.refund_transaction_id}")
 
         else:
             logger.warning(f"Unhandled status for booking {booking.id}: {ipn_obj.payment_status}")
