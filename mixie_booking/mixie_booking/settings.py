@@ -31,7 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    '47c5-97-101-224-173.ngrok-free.app',
+    '8f52-97-101-224-173.ngrok-free.app',
     '.ngrok-free.app',
 ]
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -41,7 +41,7 @@ PAYPAL_IPN_ENCODING = 'utf-8'
 
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://47c5-97-101-224-173.ngrok-free.app' 
+    'https://8f52-97-101-224-173.ngrok-free.app' 
 ]
 
 USE_X_FORWARDED_HOST = True
@@ -193,6 +193,8 @@ LOGGING = {
         },
     },
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

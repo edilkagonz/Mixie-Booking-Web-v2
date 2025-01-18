@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import Contact, Booking, DisabledDate, Package
 from paypal.standard.ipn.models import PayPalIPN
+from paypal.standard.forms import PayPalPaymentsForm
+from decimal import Decimal
 import paypalrestsdk  
 
 
@@ -20,13 +22,59 @@ class BookingAdmin(admin.ModelAdmin):
         'refund_amount', 'refund_transaction_id', 'refund_date'
     )
     search_fields = ('name', 'email')
-    list_filter = ('date', 'payment_status', 'refund_date')  # Filter refunds
+    list_filter = ('date', 'payment_status', 'refund_date')
+    actions = ['generate_payment_link', 'mark_balance_paid', 'mark_refunded', 'issue_refund']
 
     def get_package_name(self, obj):
         return obj.package.name  # Show package name
     get_package_name.short_description = 'Package'
 
-    actions = ['mark_refunded', 'issue_refund']  # Add refund action
+    # Action to generate PayPal payment link
+    def generate_payment_link(self, request, queryset):
+        """
+        Generate PayPal payment link for remaining balance.
+        """
+        for booking in queryset:
+            if not booking.balance_paid and booking.deposit_paid:
+                remaining_amount = booking.package.price - Decimal('50.00')
+                paypal_dict = {
+                    "business": "sb-un0zt35508323@business.example.com",
+                    "amount": remaining_amount,
+                    "item_name": f"Remaining balance for {booking.package.name} - {booking.name}",
+                    "invoice": str(booking.id),
+                    "notify_url": "https://your-ngrok-url/paypal/",
+                    "return": "https://your-ngrok-url/payment/success/",
+                    "cancel_return": "https://your-ngrok-url/payment/cancel/",
+                    "currency_code": "USD",
+                    "cmd": "_xclick",
+                }
+
+                # Properly construct the PayPal URL
+                payment_link = (
+                    "https://www.sandbox.paypal.com/cgi-bin/webscr?"
+                    + "&".join(f"{key}={value}" for key, value in paypal_dict.items())
+                )
+
+                self.message_user(request, f"Payment link for Booking {booking.id}: {payment_link}")
+            else:
+                self.message_user(request, f"Booking {booking.id} already has balance paid or deposit not paid.")
+    generate_payment_link.short_description = "Generate Payment Link for Remaining Balance"
+
+
+    # Action to manually mark balance as paid
+    def mark_balance_paid(self, request, queryset):
+        """
+        Mark remaining balance as paid manually.
+        """
+        for booking in queryset:
+            if not booking.balance_paid and booking.deposit_paid:
+                booking.balance_paid = True
+                booking.payment_status = 'confirmed'
+                booking.save()
+                self.message_user(request, f"Booking {booking.id} marked as balance paid.")
+            else:
+                self.message_user(request, f"Booking {booking.id} already has balance paid or deposit not paid.")
+    mark_balance_paid.short_description = "Manually Mark Balance as Paid"
 
     # Manual Refund Action - Status Only
     def mark_refunded(self, request, queryset):

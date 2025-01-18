@@ -88,15 +88,37 @@ def paypal_ipn_handler(sender, **kwargs):
             ipn_obj.receiver_email == "sb-un0zt35508323@business.example.com" and  # Sandbox email
             ipn_obj.mc_currency == "USD"  # Ensure currency is correct
         ):
-            # Mark deposit as paid
-            booking.payment_status = 'confirmed'
-            booking.transaction_id = ipn_obj.txn_id  # Save transaction ID
-            booking.deposit_paid = True  # Confirm deposit payment
-            booking.save()
+            if float(ipn_obj.mc_gross) == 50.00:  # Deposit amount
+                # Mark deposit as paid
+                booking.payment_status = 'confirmed'
+                booking.transaction_id = ipn_obj.txn_id
+                booking.deposit_paid = True
+                booking.save()
 
-            # Disable selected date
-            DisabledDate.objects.get_or_create(date=booking.date)
-            logger.info(f"Booking {booking.id} confirmed. Date disabled.")
+                # Disable selected date
+                DisabledDate.objects.get_or_create(date=booking.date)
+                logger.info(f"Deposit paid for booking {booking.id}. Date disabled.")
+                
+                send_booking_confirmation(
+                    email=booking.email,  # Replace with actual email field from the booking
+                    subject="Booking Confirmation",
+                    message=f"Dear {booking.name},\n\n"
+                            f"Your booking for {booking.package.name} on {booking.date} has been confirmed.\n"
+                            f"Transaction ID: {booking.transaction_id}\n\n"
+                            f"Thank you!"
+                )
+                logger.info(f"Booking confirmation email sent to {booking.email}.")
+
+            elif float(ipn_obj.mc_gross) == float(booking.package.price - 50.00):  # Remaining balance
+                # Mark remaining balance as paid
+                booking.balance_paid = True
+                booking.payment_status = 'confirmed'
+                booking.transaction_id = ipn_obj.txn_id
+                booking.save()
+
+                logger.info(f"Remaining balance paid for booking {booking.id}.")
+            else:
+                logger.warning(f"IPN amount mismatch for booking {booking.id}. Expected: Deposit or Remaining Balance, Got: {ipn_obj.mc_gross}")
 
         elif ipn_obj.payment_status == "Refunded":
             # Handle refunds
@@ -112,6 +134,9 @@ def paypal_ipn_handler(sender, **kwargs):
             booking.payment_status = 'refunded'
             booking.save()
             logger.info(f"Booking {booking.id} refunded. Amount: {booking.refund_amount}, Transaction ID: {booking.refund_transaction_id}")
+
+            # Release the associated date
+            DisabledDate.objects.filter(date=booking.date).delete()
 
         else:
             logger.warning(f"Unhandled status for booking {booking.id}: {ipn_obj.payment_status}")
@@ -173,7 +198,7 @@ def booking_payment(request, booking_id):
         "amount": deposit_amount,  # Charge deposit amount
         "item_name": f"Deposit for {booking.package.name} - {booking.name}",
         "invoice": str(booking.id),  # Unique booking ID
-        "notify_url":"https://47c5-97-101-224-173.ngrok-free.app/paypal/",
+        "notify_url":"https://8f52-97-101-224-173.ngrok-free.app/paypal/",
         "return_url": request.build_absolute_uri(reverse('payment_success')),
         "cancel_return": request.build_absolute_uri(reverse('payment_cancel')),
         "currency_code": "USD",
@@ -181,5 +206,19 @@ def booking_payment(request, booking_id):
 
     form = PayPalPaymentsForm(initial=paypal_dict)
     return render(request, 'booking_payment.html', {'form': form, 'booking': booking})
+
+logger = logging.getLogger(__name__)
+
+def send_booking_confirmation(email, subject, message):
+    """
+    Send a booking confirmation email and log the result.
+    """
+    try:
+        send_mail(subject, message, 'your-email@example.com', [email])
+        logger.info(f"Email sent successfully to {email}")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to send email to {email}: {e}")
+        return False
 
 

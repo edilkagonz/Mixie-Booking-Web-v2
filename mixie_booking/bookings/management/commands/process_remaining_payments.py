@@ -1,47 +1,42 @@
 from django.core.management.base import BaseCommand
 from bookings.models import Booking
-from paypal.standard.forms import PayPalPaymentsForm
 from django.urls import reverse
-from datetime import date
+from paypal.standard.forms import PayPalPaymentsForm
+from datetime import date, timedelta
 from decimal import Decimal
 import logging
 
 logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
-    help = 'Process remaining payments for bookings due today'
+    help = 'Process remaining balance payments for bookings due tomorrow'
 
     def handle(self, *args, **kwargs):
         try:
-            # Find bookings due today with deposits paid and balances not paid
-            bookings = Booking.objects.filter(date=date.today(), deposit_paid=True, balance_paid=False)
+            # Find bookings for tomorrow where deposit is paid but balance is not
+            tomorrow = date.today() + timedelta(days=1)
+            bookings = Booking.objects.filter(date=tomorrow, deposit_paid=True, balance_paid=False)
 
             for booking in bookings:
-                # Calculate the remaining balance
-                remaining_amount = booking.package.price - Decimal('50.00')
-
-                # Prepare PayPal payment details
+                # Calculate remaining balance
+                remaining_amount = booking.package.price - Decimal('50.00')  # Deduct deposit amount
+                
+                # Generate PayPal payment form data
                 paypal_dict = {
                     "business": "sb-un0zt35508323@business.example.com",
                     "amount": remaining_amount,
                     "item_name": f"Remaining balance for {booking.package.name} - {booking.name}",
-                    "invoice": f"{booking.id}-balance",  # Create a unique invoice for the balance
-                    "notify_url": "https://47c5-97-101-224-173.ngrok-free.app/paypal/",  # IPN endpoint
-                    "return_url": "https://47c5-97-101-224-173.ngrok-free.app/payment/success/",
-                    "cancel_return": "https://47c5-97-101-224-173.ngrok-free.app/payment/cancel/",
+                    "invoice": str(booking.id),
+                    "notify_url": "https://21b9-97-101-224-173.ngrok-free.app/paypal/",
+                    "return_url": "https://21b9-97-101-224-173.ngrok-free.app/payment/success/",
+                    "cancel_return": "https://21b9-97-101-224-173.ngrok-free.app/payment/cancel/",
                     "currency_code": "USD",
                 }
 
-                # Generate the PayPal form
-                form = PayPalPaymentsForm(initial=paypal_dict)
+                # Log the generated payment form data
+                logger.info(f"Generated PayPal payment for booking {booking.id}: {paypal_dict}")
 
-                # Log the payment attempt
-                logger.info(f"Processing remaining payment for booking {booking.id}. Amount: ${remaining_amount}")
-
-                # Instead of directly marking the balance_paid, let IPN handle it after PayPal processes the payment.
-
-            self.stdout.write(self.style.SUCCESS('Successfully sent remaining balance forms for processing.'))
-
+            self.stdout.write(self.style.SUCCESS("Successfully processed remaining balances for bookings tomorrow."))
         except Exception as e:
-            logger.error(f"Error processing payments: {str(e)}")
-            self.stderr.write(self.style.ERROR('Error processing payments. Check logs for details.'))
+            logger.error(f"Error processing remaining payments: {str(e)}")
+            self.stderr.write(self.style.ERROR("Error processing payments. Check logs for details."))
