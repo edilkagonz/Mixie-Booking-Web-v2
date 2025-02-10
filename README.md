@@ -16,7 +16,7 @@ Features
 Tech Stack
 	•	Backend: Python (Django)
 	•	Frontend: HTML, CSS, JavaScript
-	•	Database: SQLite/MySQL
+	•	Database: MySQL
 	•	Payments: PayPal IPN Integration
 
 Installation & Setup
